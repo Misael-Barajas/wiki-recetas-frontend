@@ -1,0 +1,100 @@
+<div class="container mt-4 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      
+      <h2 class="mb-4">
+        {{ modoEdicion ? '📝 Editar Receta Num. ' + idRecetaAEditar : '👨‍🍳 Agregar Nueva Receta' }}
+      </h2>
+
+      @if (mensajeExito) {
+        <div class="alert alert-success shadow-sm animate__animated animate__fadeIn">
+          {{ mensajeExito }}
+        </div>
+      }
+
+      <form [formGroup]="formularioReceta" (ngSubmit)="guardarReceta()" class="card p-4 shadow-sm border-0 bg-white mb-5">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Título de la receta</label>
+          <input type="text" class="form-control" formControlName="titulo" placeholder="Ej. Tacos al Pastor">
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-bold">Tiempo (min)</label>
+            <input type="number" class="form-control" formControlName="tiempo_preparacion">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-bold">Porciones</label>
+            <input type="number" class="form-control" formControlName="porciones">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-bold">Categoría</label>
+            <select class="form-select" formControlName="id_categoria">
+              <option value="">Selecciona...</option>
+              <option value="1">Desayunos</option>
+              <option value="2">Postres</option>
+              <option value="3">Comida Mexicana</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-bold">Instrucciones</label>
+          <textarea class="form-control" rows="3" formControlName="instrucciones"></textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary lg flex-grow-1" [disabled]="formularioReceta.invalid">
+            {{ modoEdicion ? 'Actualizar Cambios' : 'Guardar Receta' }}
+          </button>
+          
+          @if (modoEdicion) {
+            <button type="button" class="btn btn-secondary lg" (click)="limpiarFormulario()">
+              Cancelar
+            </button>
+          }
+        </div>
+      </form>
+
+      <h3 class="mb-3">📊 Panel de Control (Base de Datos)</h3>
+      <div class="table-responsive card p-3 shadow-sm border-0 bg-white">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Categoría</th>
+              <th>Tiempo</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (receta of listaRecetas; track receta.id_receta) {
+              <tr>
+                <td><strong>#{{ receta.id_receta }}</strong></td>
+                <td>{{ receta.titulo }}</td>
+                <td><span class="badge bg-light text-dark border">{{ receta.nombre_categoria || 'Sin Categoría' }}</span></td>
+                <td>⏱ {{ receta.tiempo_preparacion }} min</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-warning fw-semibold" (click)="seleccionarParaEditar(receta)">
+                      Editar
+                    </button>
+                    <button class="btn btn-danger fw-semibold" (click)="borrarReceta(receta.id_receta)">
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="text-center text-muted py-3">No hay registros cargados en la base de datos.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
