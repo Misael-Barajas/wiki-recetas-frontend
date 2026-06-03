@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow border-0">
+        <div class="card-body p-5">
+          <h3 class="text-center mb-4">Iniciar Sesión</h3>
+
+          @if (errorMensaje) {
+            <div class="alert alert-danger">{{ errorMensaje }}</div>
+          }
+
+          <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Correo Electrónico</label>
+              <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@correo.com">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Contraseña</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="********">
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark btn-lg" [disabled]="loginForm.invalid">
+                Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

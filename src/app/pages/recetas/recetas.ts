@@ -1,23 +1,22 @@
-// 1. Agregamos ChangeDetectorRef a los imports de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api';
 
 @Component({
   selector: 'app-recetas',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './recetas.html',
-  styleUrl: './recetas.css'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './recetas.html'
 })
 export class Recetas implements OnInit {
   listaRecetas: any[] = [];
+  recetasFiltradas: any[] = [];
+  textoBusqueda: string = '';
+  recetaSeleccionada: any = null;
+  comentariosReceta: any[] = [];
 
-  // 2. Inyectamos private cdr: ChangeDetectorRef en el constructor
-  constructor(
-    private apiService: ApiService,
-    private cdr: ChangeDetectorRef 
-  ) {}
+  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cargarRecetas();
@@ -27,15 +26,31 @@ export class Recetas implements OnInit {
     this.apiService.getRecetas().subscribe({
       next: (datos) => {
         this.listaRecetas = datos;
-        
-        // 3. Le decimos a Angular: "¡Oye, ya llegaron los datos, actualiza la pantalla YA!"
+        this.recetasFiltradas = datos;
         this.cdr.detectChanges(); 
-        
-        console.log('Recetas cargadas y vista actualizada:', this.listaRecetas);
       },
-      error: (err) => {
-        console.error('Error al conectar con la API', err);
-      }
+      error: (err) => console.error(err)
+    });
+  }
+
+  filtrar(): void {
+    const termino = this.textoBusqueda.toLowerCase();
+    this.recetasFiltradas = this.listaRecetas.filter(receta => 
+      receta.titulo.toLowerCase().includes(termino) || 
+      (receta.nombre_categoria && receta.nombre_categoria.toLowerCase().includes(termino))
+    );
+  }
+
+  verDetalle(receta: any): void {
+    this.recetaSeleccionada = receta;
+    this.comentariosReceta = [];
+
+    this.apiService.getComentarios(receta.id_receta).subscribe({
+      next: (datos) => {
+        this.comentariosReceta = datos;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
     });
   }
 }

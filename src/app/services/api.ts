@@ -25,4 +25,12 @@ export class ApiService {
   eliminarReceta(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/recetas/${id}`);
   }
+
+  getRecetasDestacadas(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/recetas/destacadas`);
+  }
+
+  getComentarios(idReceta: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/recetas/${idReceta}/comentarios`);
+  }
 }

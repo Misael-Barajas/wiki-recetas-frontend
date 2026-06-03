@@ -1,17 +1,27 @@
 <div class="container mt-4">
-  <h2 class="mb-4">🍲 Catálogo de Recetas</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Catálogo de Recetas</h2>
+    
+    <div class="w-25">
+      <input type="text" class="form-control rounded-pill px-4" 
+             placeholder="Buscar por nombre o categoría..." 
+             [(ngModel)]="textoBusqueda" 
+             (keyup)="filtrar()">
+    </div>
+  </div>
 
-  @if (listaRecetas.length === 0) {
-    <div class="alert alert-info shadow-sm">
-      Cargando recetas o no hay recetas disponibles...
+  @if (recetasFiltradas.length === 0) {
+    <div class="alert alert-info shadow-sm text-center">
+      No se encontraron recetas con tu búsqueda.
     </div>
   } @else {
     <div class="row">
-      @for (receta of listaRecetas; track receta.id_receta) {
-        <div class="col-md-4 mb-4">
+      @for (receta of recetasFiltradas; track receta.id_receta) {
+        <div class="col-md-4 mb-4" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalReceta" 
+     (click)="verDetalle(receta)">
           <div class="card h-100 shadow-sm border-0">
             <div class="card-header bg-dark text-white fw-bold">
-              {{ receta.nombre_categoria }}
+              {{ receta.nombre_categoria || 'Sin Categoría' }}
             </div>
             <div class="card-body">
               <h5 class="card-title text-primary">{{ receta.titulo }}</h5>
@@ -19,11 +29,60 @@
             </div>
             <div class="card-footer bg-light d-flex justify-content-between align-items-center">
               <span class="badge bg-secondary">⏱ {{ receta.tiempo_preparacion }} min</span>
-              <small class="text-muted fw-semibold">👨‍🍳 {{ receta.autor }}</small>
+              
+              <span class="badge bg-warning text-dark border border-warning shadow-sm">
+                ⭐ {{ receta.promedio | number:'1.1-1' }}
+              </span>
+              
+              <small class="text-muted fw-semibold">{{ receta.autor }}</small>
             </div>
           </div>
         </div>
       }
     </div>
   }
+</div>
+
+<div class="modal fade" id="modalReceta" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg" *ngIf="recetaSeleccionada">
+      
+      <div class="modal-header bg-dark text-white border-0">
+        <h4 class="modal-title fw-bold">🍲 {{ recetaSeleccionada.titulo }}</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4 bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span class="badge bg-secondary fs-6">Categoría: {{ recetaSeleccionada.nombre_categoria }}</span>
+          <span class="badge bg-warning text-dark fs-6 shadow-sm border border-warning">⭐ {{ recetaSeleccionada.promedio | number:'1.1-1' }}</span>
+        </div>
+
+        <h5 class="fw-bold text-primary border-bottom pb-2">Instrucciones de Preparación</h5>
+        <p class="fs-5 mb-4" style="white-space: pre-line;">{{ recetaSeleccionada.instrucciones }}</p>
+
+        <h5 class="fw-bold text-dark border-bottom pb-2 mt-5">Comentarios de la comunidad</h5>
+        
+        @if (comentariosReceta.length === 0) {
+          <p class="text-muted fst-italic mt-3">Aún no hay comentarios. ¡Sé el primero en probarla!</p>
+        } @else {
+          <div class="mt-3">
+            @for (comentario of comentariosReceta; track $index) {
+              <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <strong class="text-primary">{{ comentario.autor }}</strong>
+                    <span class="text-warning fw-bold">⭐ {{ comentario.calificacion }} / 5</span>
+                  </div>
+                  <p class="mb-1 mt-2">{{ comentario.texto_comentario }}</p>
+                  <small class="text-muted">{{ comentario.fecha_comentario | date:'short' }}</small>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
 </div>

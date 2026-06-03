@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-// 1. Importamos las herramientas de enrutamiento
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  // 2. Las agregamos al arreglo de imports
-  imports: [RouterLink, RouterLinkActive], 
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  imports: [RouterLink, RouterLinkActive, CommonModule], 
+  templateUrl: './navbar.html'
 })
 export class Navbar {
+  constructor(public authService: AuthService) {}
 
+  cerrarSesion() {
+    this.authService.logout();
+  }
 }

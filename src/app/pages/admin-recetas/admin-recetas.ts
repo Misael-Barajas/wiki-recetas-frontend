@@ -12,10 +12,9 @@ import { ApiService } from '../../services/api';
 })
 export class AdminRecetas implements OnInit {
   formularioReceta: FormGroup;
-  listaRecetas: any[] = []; // Para mostrar en la tabla de gestión
+  listaRecetas: any[] = [];
   mensajeExito: string = '';
   
-  // Variables de control para la edición
   modoEdicion: boolean = false;
   idRecetaAEditar: number | null = null;
 
@@ -38,7 +37,7 @@ export class AdminRecetas implements OnInit {
     this.apiService.getRecetas().subscribe({
       next: (datos) => {
         this.listaRecetas = datos;
-        this.cdr.detectChanges(); // Asegura la actualización inmediata de la tabla
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al listar recetas', err)
     });
@@ -48,7 +47,6 @@ export class AdminRecetas implements OnInit {
     if (this.formularioReceta.invalid) return;
 
     if (this.modoEdicion && this.idRecetaAEditar !== null) {
-      // --- LÓGICA DE ACTUALIZAR (PUT) ---
       this.apiService.actualizarReceta(this.idRecetaAEditar, this.formularioReceta.value).subscribe({
         next: () => {
           this.mensajeExito = '¡Receta actualizada correctamente!';
@@ -58,7 +56,6 @@ export class AdminRecetas implements OnInit {
         error: (err) => console.error('Error al actualizar', err)
       });
     } else {
-      // --- LÓGICA DE CREAR (POST) ---
       this.apiService.crearReceta(this.formularioReceta.value).subscribe({
         next: () => {
           this.mensajeExito = '¡Receta guardada exitosamente!';
@@ -70,12 +67,10 @@ export class AdminRecetas implements OnInit {
     }
   }
 
-  // Carga los datos de la fila de la tabla directamente al formulario
   seleccionarParaEditar(receta: any): void {
     this.modoEdicion = true;
     this.idRecetaAEditar = receta.id_receta;
 
-    // Seteamos los valores en los inputs del formulario
     this.formularioReceta.patchValue({
       titulo: receta.titulo,
       instrucciones: receta.instrucciones,
@@ -85,7 +80,6 @@ export class AdminRecetas implements OnInit {
     });
   }
 
-  // --- LÓGICA DE ELIMINAR (DELETE) ---
   borrarReceta(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar esta receta?')) {
       this.apiService.eliminarReceta(id).subscribe({
