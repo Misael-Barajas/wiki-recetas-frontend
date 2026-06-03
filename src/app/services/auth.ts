@@ -29,4 +29,9 @@ export class AuthService {
   estaAutenticado(): boolean {
     return !!localStorage.getItem('usuarioLogueado');
   }
+
+  getUsuarioActual() {
+    const userStr = localStorage.getItem('usuarioLogueado');
+    return userStr ? JSON.parse(userStr) : null;
+  }
 }

@@ -1,59 +1,32 @@
-# WikiRecetasFrontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+# Wiki Recetas - API REST (Backend)
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+-   Node.js y npm instalados.
+    
+-   MySQL ejecutándose en el puerto 3306.
+    
 
-```bash
-ng serve
-```
+## Despliegue
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1.  Ejecutar el script SQL incluido para generar la base de datos `wiki_recetas_db`.
+    
+2.  Clonar este proyecto y ejecutar `npm install` en la terminal.
 
-## Code scaffolding
+3.  Iniciar el servidor ejecutando `node index.js`.
+    
+4.  La API estará disponible en `http://localhost:3000/api/`.
+    
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Funcionalidades
 
-```bash
-ng generate component component-name
-```
+Se implementó el consumo de la base de datos y un **CRUD completo para 4 tablas** cumpliendo con los requisitos del proyecto:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+-   `/api/recetas` (GET, POST, PUT, DELETE)
+    
+-   `/api/categorias` (GET, POST, PUT, DELETE)
+    
+-   `/api/ingredientes` (GET, POST, PUT, DELETE)
+    
+-   `/api/usuarios` (GET, POST, PUT, DELETE)

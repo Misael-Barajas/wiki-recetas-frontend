@@ -22,8 +22,8 @@ export class ApiService {
     return this.http.put(`${this.apiUrl}/recetas/${id}`, datosReceta);
   }
 
-  eliminarReceta(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/recetas/${id}`);
+  eliminarReceta(id: number, idUsuario: number, rol: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/recetas/${id}?id_usuario=${idUsuario}&rol=${rol}`);
   }
 
   getRecetasDestacadas(): Observable<any> {
