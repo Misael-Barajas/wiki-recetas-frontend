@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primaryColor: #f67041;
+  --primaryColHover: #dc6d44;
+  --backgroundColor: #fff8f3;
+  --secBackgroundCol: #fee5d6;
+  --textColor: #410a09;
+  --cardColor: #ffffff;
+     
+  --bs-primary: var(--primaryColor);
+  --bs-primary-rgb: 246, 112, 65; 
+
+  --bs-body-bg: var(--backgroundColor);
+  --bs-body-color: var(--textColor);
+
+  --bs-dark: var(--textColor);
+  --bs-dark-rgb: 246, 112, 68; 
+
+  --bs-light: var(--secBackgroundCol);
+    --bs-light-rgb: 254, 229, 214;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--primaryColor);
+  --bs-btn-border-color: var(--primaryColor);
+  --bs-btn-hover-bg: var(--primaryColHover);
+  --bs-btn-hover-border-color: var(--primaryColHover);
+  --bs-btn-active-bg: var(--primaryColHover);
+  color: #ffffff;
+}
+
+.btn-outline-dark {
+  --bs-btn-color: var(--textColor);
+  --bs-btn-border-color: var(--textColor);
+  --bs-btn-hover-bg: var(--textColor);
+  --bs-btn-hover-border-color: var(--textColor);
+  --bs-btn-hover-color: #ffffff;
+}
+
+.card {
+  --bs-card-bg: var(--cardColor);
+}
