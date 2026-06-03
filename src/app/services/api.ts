@@ -33,4 +33,16 @@ export class ApiService {
   getComentarios(idReceta: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/recetas/${idReceta}/comentarios`);
   }
+
+  agregarComentario(idReceta: number, datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recetas/${idReceta}/comentarios`, datos);
+  }
+
+  actualizarComentario(idComentario: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/comentarios/${idComentario}`, datos);
+  }
+
+  eliminarComentario(idComentario: number, idUsuario: number, rol: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/comentarios/${idComentario}?id_usuario=${idUsuario}&rol=${rol}`);
+  }
 }

@@ -21,6 +21,10 @@ export class AuthService {
     );
   }
 
+  registrar(usuario: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/usuarios`, usuario);
+  }
+
   logout(): void {
     localStorage.removeItem('usuarioLogueado');
     this.router.navigate(['/inicio']);
