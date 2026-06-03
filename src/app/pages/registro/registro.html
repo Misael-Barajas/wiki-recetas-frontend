@@ -3,9 +3,8 @@
     <div class="col-md-5">
       <div class="card shadow-lg border-0 rounded-4">
         <div class="card-body p-5">
-          <h3 class="text-center fw-bold text-dark mb-4">✨ Crear Cuenta</h3>
+          <h3 class="text-center fw-bold text-dark mb-4">Crear cuenta</h3>
 
-          <!-- Alertas -->
           @if (mensajeExito) {
             <div class="alert alert-success text-center shadow-sm">
               {{ mensajeExito }}
@@ -19,18 +18,18 @@
 
           <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
             <div class="mb-3">
-              <label class="form-label fw-bold text-secondary">Nombre Completo</label>
-              <input type="text" class="form-control form-control-lg bg-light" formControlName="nombre" placeholder="Ej. Carlos Mendoza">
+              <label class="form-label fw-bold">Nombre completo</label>
+              <input type="text" class="form-control" formControlName="nombre" placeholder="Ej. Carlos Mendoza">
             </div>
 
             <div class="mb-3">
-              <label class="form-label fw-bold text-secondary">Correo Electrónico</label>
-              <input type="email" class="form-control form-control-lg bg-light" formControlName="correo" placeholder="ejemplo@correo.com">
+              <label class="form-label fw-bold">Correo electrónico</label>
+              <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@correo.com">
             </div>
 
             <div class="mb-4">
-              <label class="form-label fw-bold text-secondary">Contraseña</label>
-              <input type="password" class="form-control form-control-lg bg-light" formControlName="password_hash" placeholder="Mínimo 6 caracteres">
+              <label class="form-label fw-bold">Contraseña</label>
+              <input type="password" class="form-control" formControlName="password_hash" placeholder="Mínimo 6 caracteres">
             </div>
 
             <div class="d-grid gap-3">

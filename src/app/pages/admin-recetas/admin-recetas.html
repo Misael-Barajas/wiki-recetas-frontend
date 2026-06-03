@@ -3,7 +3,7 @@
     <div class="col-md-10">
       
       <h2 class="mb-4">
-        {{ modoEdicion ? 'Editar Receta Num. ' + idRecetaAEditar : 'Agregar Nueva Receta' }}
+        {{ modoEdicion ? 'Editar receta num. ' + idRecetaAEditar : 'Agregar nueva receta' }}
       </h2>
 
       @if (mensajeExito) {
@@ -45,7 +45,7 @@
 
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary lg flex-grow-1" [disabled]="formularioReceta.invalid">
-            {{ modoEdicion ? 'Actualizar Cambios' : 'Guardar Receta' }}
+            {{ modoEdicion ? 'Actualizar cambios' : 'Guardar receta' }}
           </button>
           
           @if (modoEdicion) {
@@ -57,7 +57,7 @@
       </form>
 
       <h3 class="mb-3">
-        {{ usuarioActual?.rol === 'admin' ? '📊 Panel de Control (Base de Datos)' : '🍳 Mis Recetas' }}
+        {{ usuarioActual?.rol === 'admin' ? 'Panel de control' : 'Mis recetas' }}
       </h3>
       
       <div class="table-responsive card p-3 shadow-sm border-0 bg-white">
