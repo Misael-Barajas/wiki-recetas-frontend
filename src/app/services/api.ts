@@ -45,4 +45,27 @@ export class ApiService {
   eliminarComentario(idComentario: number, idUsuario: number, rol: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/comentarios/${idComentario}?id_usuario=${idUsuario}&rol=${rol}`);
   }
+
+  getCategorias(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/categorias`);
+  }
+  crearCategoria(datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/categorias`, datos);
+  }
+  actualizarCategoria(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/categorias/${id}`, datos);
+  }
+  eliminarCategoria(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/categorias/${id}`);
+  }
+
+  getUsuarios(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios`);
+  }
+  actualizarUsuario(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/usuarios/${id}`, datos);
+  }
+  eliminarUsuario(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/usuarios/${id}`);
+  }
 }

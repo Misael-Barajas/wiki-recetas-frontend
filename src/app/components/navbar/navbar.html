@@ -10,10 +10,26 @@
         <li class="nav-item"><a class="nav-link" routerLink="/recetas" routerLinkActive="active">Recetas</a></li>
         
         @if (authService.estaAutenticado()) {
-          <li class="nav-item"><a class="nav-link" routerLink="/admin-recetas" routerLinkActive="active">Administrar</a></li>
-          <li class="nav-item"><button class="btn btn-outline-danger ms-2" (click)="cerrarSesion()">Salir</button></li>
+          
+          @if (authService.getUsuarioActual()?.rol === 'admin') {
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Panel admin</a>
+              <ul class="dropdown-menu shadow border-0">
+                <li><a class="dropdown-item" routerLink="/admin-recetas">Gestionar recetas</a></li>
+                <li><a class="dropdown-item" routerLink="/admin-categorias">Gestionar categorías</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" routerLink="/admin-usuarios">Gestionar usuarios</a></li>
+              </ul>
+            </li>
+          } @else {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-recetas" routerLinkActive="active">Mis Recetas</a>
+            </li>
+          }
+
+          <li class="nav-item"><button class="btn btn-outline-dark ms-3" (click)="cerrarSesion()">Salir</button></li>
         } @else {
-          <li class="nav-item"><a class="btn btn-primary ms-2" routerLink="/login">Iniciar sesión</a></li>
+          <li class="nav-item"><a class="btn btn-outline-dark ms-2" routerLink="/login">Iniciar sesión</a></li>
         }
       </ul>
     </div>

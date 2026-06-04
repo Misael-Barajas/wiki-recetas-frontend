@@ -1,0 +1,77 @@
+<div class="container mt-4 mb-5">
+  <h2 class="mb-4">Administrar usuarios</h2>
+  
+  <div class="row">
+    
+    @if (usuarioSeleccionado) {
+      <div class="col-md-4 mb-4">
+        <form [formGroup]="formularioUsuario" (ngSubmit)="guardarUsuario()" class="card p-4 shadow-sm border-0 bg-white">
+          <h5 class="fw-bold mb-3">Editar Usuario</h5>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Correo</label>
+            <input type="email" class="form-control" formControlName="correo">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Rol</label>
+            <select class="form-select" formControlName="rol">
+              <option value="usuario">Usuario normal</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-bold">Nueva contraseña</label>
+            <input type="password" class="form-control" formControlName="password_hash" placeholder="Dejar en blanco para no cambiar">
+            <small class="text-muted">Si no quieres cambiarla, déjala vacía.</small>
+          </div>
+          
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1" [disabled]="formularioUsuario.invalid">Actualizar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    }
+
+    <div [class]="usuarioSeleccionado ? 'col-md-8' : 'col-md-12'">
+      <div class="card p-3 shadow-sm border-0 bg-white table-responsive">
+        <table class="table align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th><th>Nombre</th><th>Correo</th><th>Registro</th><th>Rol</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of listaUsuarios; track user.id_usuario) {
+              <tr>
+                <td>{{ user.id_usuario }}</td>
+                <td class="fw-bold">{{ user.nombre }}</td>
+                <td>{{ user.correo }}</td>
+                <td>{{ user.fecha_registro | date:'shortDate' }}</td>
+                <td>
+                  <span class="badge" [ngClass]="user.rol === 'admin' ? 'bg-primary' : 'bg-secondary'">
+                    {{ user.rol | uppercase }}
+                  </span>
+                </td>
+                <td>
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-warning" (click)="seleccionarUsuario(user)">Editar</button>
+                    <button class="btn btn-danger" (click)="borrarUsuario(user.id_usuario)" [disabled]="user.id_usuario === usuarioActual?.id_usuario">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+</div>
